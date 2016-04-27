@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,user-scalable=no">
+		<!--<link rel="stylesheet" href="css/base.css" />
+		<link rel="stylesheet" type="text/css" href="css320/datePicker.css" />
+		<link type="text/css" href="css320/btn.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css320/tips.css" />-->
+		<link rel="stylesheet" type="text/css" href="../webui/1.0.0/phone/css/webui.min.css"/>
+		<title></title>
+		<style type="text/css">
+			*,
+			*:before,
+			*:after {
+				-webkit-user-select: none;
+				-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+				-moz-user-select: -moz-none;
+				/*禁止用户选中文本，-moz-none，是写给老版本的ff的方法，当然新版本也是向上兼容的	
+				目前还是个私用属性，ios2.0以上的safari实现良好，安卓尚未支持*/
+				-webkit-touch-callout: none;
+				-ms-touch-action: pan-y;
+			}
+			
+			.title-p {
+				text-align: center;
+				color: #febe44;
+				font-size: 20px;
+				padding: 24px 0 18px 0
+			}
+			
+			body {
+				background-color: #f1f1f1;
+			}
+			
+			.lab_text {
+				font-size: 14px;
+				color: #787878;
+				line-height: 50px;
+				padding: 0;
+				margin: 0;
+				vertical-align: middle;
+			}
+			
+			.test_check {
+				margin-top: 20px;
+			}
+			
+			.ui-block-btn {
+				background: #fff;
+				width: 50%;
+				border: 1px #44ABE5 solid;
+				color: #44ABE5;
+				outline: none;
+			}
+			
+			.text_div {
+				font-size: 12px;
+				text-indent: 2em;
+				color: #BEBEBE;
+				padding: 6px 6px 20px 6px;
+			}
+			
+			.tips_cont {
+				width: 40%;
+				height: auto;
+				position: absolute;
+				margin: -14% 0 2% 60%;
+				z-index: 40;
+			}
+			
+			.tips_cont2 {
+				width: 40%;
+				height: auto;
+				position: absolute;
+				margin: -12% 0 60% 2%;
+				z-index: 45;
+			}
+			
+			.tips_cont3 {
+				margin: -10px 0 0 60px;
+				z-index: 50;
+			}
+			
+			.tips_cont4 {
+				margin: -68px 0 0 50px;
+				z-index: 55;
+			}
+			
+			.test-input {
+				width: 30%;
+				height: auto;
+				border: 1px #44ABE5 solid;
+				padding: 6px 10px 6px 0;
+				outline: none;
+				margin: 10px 0 10px 30%;
+			}
+			
+			::-webkit-input-placeholder {
+				font-size: 14px;
+				line-height: 22px;
+				padding: 0 0 0 10px;
+			}
+			
+			input:focus {
+				padding-left: 10px;
+			}
+			
+			.demo-content {
+				background: #FFFFFF;
+				border-bottom: 1px #ccc solid;
+				border-top: 1px #ccc solid;
+				padding: 0 0 20px 0;
+				margin: 0 0 10px 0;
+			}
+			
+			.top-title {
+				background: #fff;
+				padding: 6px;
+				margin-top: 20px;
+				color: #f78b4a;
+				font-size: 20px;
+				text-align: center;
+			}
+			
+			.top-title span {
+				display: block;
+				position: absolute;
+				background: #f78b4a;
+				width: 4px;
+				margin: -6px 0 0 -6px;
+				height: 40px;
+			}
+			/*以上css仅作demo排版样式*/
+			
+			.yuansheng-select {
+				width: 80%;
+				display: block;
+				margin: 0 auto;
+				border-color: #78787;
+				height: 45px;
+				text-indent: 8px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="title-p">滑动选择</div>
+		<p>1.原生select</p>
+		<div class="demo-content">
+			<div class="text_div">
+				原生 SELECT（选择框）在不同的设备上UI可能会有差异，并且不支持多级联动(多个 SELECT 可实现，但较麻烦)，故mui封装了picker组件，参见如下示例。
+			</div>
+			<select class="yuansheng-select">
+					<option value="item-1">item-1</option>
+					<option value="item-2">item-2</option>
+					<option value="item-3">item-3</option>
+					<option value="item-4">item-4</option>
+					<option value="item-5">item-5</option>
+				</select>
+		</div>
+
+		<p>2.滑动选择</p>
+		<div class="demo-content">
+			<div class="text_div">
+				只有一条选择信息。
+			</div>
+			<a type="button" id="picker_one" class="ui-block-btn">选择人员</a>
+		</div>
+		<p>3.时间选择</p>
+		<div class="demo-content">
+			<div class="text_div">
+				选择时间，可以通过传入不同的类型弹出相应的选择。
+			</div>
+		</div>
+		<p>常规示例</p>
+		<div class="demo-content">
+			<div class="text_div">
+				选择时间和日期。
+			</div>
+			<a id="demo1" class="ui-block-btn">选择日期时间</a>
+		</div>
+		<p>设定年份区间</p>
+		<div class="demo-content">
+			<div class="text_div">
+				设置时间选择器的选择时间年限。参数：beginYear: 2010,endYear: 2020
+			</div>
+			<a id="demo2" class="ui-block-btn">选择日期</a>
+		</div>
+		<p>设定选中的时间</p>
+		<div class="demo-content">
+			<div class="text_div">
+				设置默认选中的时间日期。参数：value:"2016-01-02",方法：setValue("2016-01-02").
+			</div>
+			<a id="demo3" class="ui-block-btn">选择日期时间</a>
+		</div>
+		<p>选择日期</p>
+		<div class="demo-content">
+			<div class="text_div">
+				选择年月日。
+			</div>
+			<a id="demo4" class="ui-block-btn">选择时间</a>
+		</div>
+		<p>选择时间</p>
+		<div class="demo-content">
+			<div class="text_div">
+				选择时分。
+			</div>
+			<a id="demo5" class="ui-block-btn">选择时间</a>
+		</div>
+		<p>选择月份</p>
+		<div class="demo-content">
+			<div class="text_div">
+				选择年月。
+			</div>
+			<a id="demo6" class="ui-block-btn">选择月份</a>
+		</div>
+		<p>设定选中的时间</p>
+		<div class="demo-content">
+			<div class="text_div">
+				选择年月日，小时。
+			</div>
+			<a id="demo7" class="ui-block-btn">选择日期时间</a>
+		</div>
+	</body>
+	<script src="lib/jquery/2.1.4/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../webui/1.0.0/phone/js/webui.min.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="js/mui.js"></script>
+	<script src="js/muipicker.js"></script>
+	<script src="js/poppicker.js"></script>
+	<script src="js/dtpicker.js"></script>
+	<script src="js/picker_new.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/datePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/tips.js" type="text/javascript" charset="utf-8"></script>-->
+	<script type="text/javascript ">
+		var data = [{
+			value: 'ywj',
+			text: '董事长 叶文洁'
+		}, {
+			value: 'aaa',
+			text: '总经理 艾AA'
+		}, {
+			value: 'lj',
+			text: '罗辑'
+		}, {
+			value: 'ymt',
+			text: '云天明'
+		}, {
+			value: 'shq',
+			text: '史强'
+		}, {
+			value: 'zhbh',
+			text: '章北海'
+		}, {
+			value: 'zhy',
+			text: '庄颜'
+		}, {
+			value: 'gyf',
+			text: '关一帆'
+		}, {
+			value: 'zhz',
+			text: '智子'
+		}, {
+			value: 'gezh',
+			text: '歌者'
+		}];
+		$(function() {
+			$("#picker_one").click(function() {
+				var ge = $(this).AINewPicker({
+					fields: data,
+					callback: function() {
+						$('body').AITips({
+							'type': 'alert',
+							'message': '你选中的为:' + ge.getText() + ',value:' + ge.getValue(),
+							'buttons': [{
+								'text': '确定',
+								'action': function() {}
+							}],
+							'icon': "img/1.png "
+						});
+					}
+				});
+				ge.open();
+			});
+			$("#demo1").click(function() {
+				var ge = $(this).AIDatePicker({
+					type: "datetime",
+					value: "2016-10-12",
+					callback: function() {
+						$('body').AITips({
+							'type': 'alert',
+							'message': '你选中的为:' + ge.getValue(),
+							'buttons': [{
+								'text': '确定',
+								'action': function() {}
+							}],
+							'icon': "img/1.png "
+						});
+					}
+				});
+				ge.open();
+			});
+			$("#demo2").click(function() {
+				var ge = $(this).AIDatePicker({
+					type: "date",
+					value: "2016-12-12",
+					callback: function() {
+						$('body').AITips({
+							'type': 'alert',
+							'message': '你选中的为:' + ge.getValue(),
+							'buttons': [{
+								'text': '确定',
+								'action': function() {}
+							}],
+							'icon': "img/1.png "
+						});
+					}
+				});
+				ge.open();
+			});
+			$("#demo3").click(function() {
+				var ge = $(this).AIDatePicker({
+					type: "datetime",
+					value: "2016-12-12 10:35",
+					callback: function() {
+						$('body').AITips({
+							'type': 'alert',
+							'message': '你选中的为:' + ge.getValue(),
+							'buttons': [{
+								'text': '确定',
+								'action': function() {}
+							}],
+							'icon': "img/1.png "
+						});
+					}
+				});
+				ge.setValue("2015-10-11 11:35");
+				ge.open();
+			});
+			$("#demo4").click(function() {
+				var ge = $(this).AIDatePicker({
+					type: "date",
+					callback: function() {
+						$('body').AITips({
+							'type': 'alert',
+							'message': '你选中的为:' + ge.getValue(),
+							'buttons': [{
+								'text': '确定',
+								'action': function() {}
+							}],
+							'icon': "img/1.png "
+						});
+					}
+				});
+				ge.open();
+			});
+			$("#demo5").click(function() {
+				var ge = $(this).AIDatePicker({
+					type: "time",
+					value: "2016-12-12",
+					callback: function() {
+						$('body').AITips({
+							'type': 'alert',
+							'message': '你选中的为:' + ge.getValue(),
+							'buttons': [{
+								'text': '确定',
+								'action': function() {}
+							}],
+							'icon': "img/1.png "
+						});
+					}
+				});
+				ge.open();
+			});
+			$("#demo6").click(function() {
+				var ge = $(this).AIDatePicker({
+					type: "month",
+					value: "2016-12-12",
+					callback: function() {
+						$('body').AITips({
+							'type': 'alert',
+							'message': '你选中的为:' + ge.getValue(),
+							'buttons': [{
+								'text': '确定',
+								'action': function() {}
+							}],
+							'icon': "img/1.png "
+						});
+					}
+				});
+				ge.open();
+			});
+			$("#demo7").click(function() {
+				var ge = $(this).AIDatePicker({
+					type: "hour",
+					value: "2016-12-12",
+					callback: function() {
+						$('body').AITips({
+							'type': 'alert',
+							'message': '你选中的为:' + ge.getValue(),
+							'buttons': [{
+								'text': '确定',
+								'action': function() {}
+							}],
+							'icon': "img/1.png "
+						});
+					}
+				});
+				ge.open();
+			});
+		});
+	</script>
+
+</html>
